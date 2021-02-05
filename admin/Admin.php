@@ -20,6 +20,8 @@
  * @subpackage Api_Classes/admin
  * @author     Rodolfo Neto <rodolfoneto@gmail.com>
  */
+namespace ApiClasses\Admin;
+
 class Admin {
 
 	/**

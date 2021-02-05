@@ -37,7 +37,9 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'API_CLASSES_VERSION', '1.0.0' );
 
+require_once plugin_dir_path( __FILE__ ) . './vendor/autoload.php';
 require_once plugin_dir_path( __FILE__ ) . './autoload.php';
+require_once plugin_dir_path( __FILE__ ) . './includes/ApiClasses.php';
 
 /**
  * The code that runs during plugin activation.
@@ -45,7 +47,7 @@ require_once plugin_dir_path( __FILE__ ) . './autoload.php';
  */
 function activate_api_classes() {
 //	require_once plugin_dir_path( __FILE__ ) . 'includes/class-api-classes-activator.php';
-	Activator::activate();
+    ApiClasses\Includes\Activator::activate();
 }
 
 /**
@@ -54,7 +56,7 @@ function activate_api_classes() {
  */
 function deactivate_api_classes() {
 //	require_once plugin_dir_path( __FILE__ ) . 'includes/class-api-classes-deactivator.php';
-	Deactivator::deactivate();
+	ApiClasses\Includes\Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_api_classes' );
@@ -77,7 +79,7 @@ register_deactivation_hook( __FILE__, 'deactivate_api_classes' );
  */
 function run_api_classes() {
 
-	$plugin = new ApiClasses();
+	$plugin = new ApiClasses\Includes\ApiClasses();
 	$plugin->run();
 
 }
