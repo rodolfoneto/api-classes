@@ -1,0 +1,13 @@
+{
+    "name": "rodolfoneto/api-classes",
+    "description": "Api para o cursos de criação de uma API pelo WP como backend",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Rodolfo Neto",
+            "email": "rodolfoneto@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {}
+}
