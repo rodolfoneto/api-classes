@@ -1,1 +1,3 @@
 # api-classes
+Projeto para curso de Backend API REST com WordPress.
+Baseado num Plugin onde vai criar ...
