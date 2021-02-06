@@ -96,6 +96,8 @@ add_action('rest_api_init', function(){
     ];
     (new ApiClasses\Includes\DisableRestAPI())->disableRESTAPI('wp/v2', 'users', $endUrls);
     (new ApiClasses\Includes\DisableRestAPI())->disableRESTAPI('wp/v2', 'posts', $endUrls);
+    
+    (new ApiClasses\Includes\UserRESTController())->register_routes();
 });
 
 //add_action('init', function()
