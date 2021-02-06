@@ -24,6 +24,8 @@
  * @subpackage Api_Classes/includes
  * @author     Rodolfo Neto <rodolfoneto@gmail.com>
  */
+namespace ApiClasses\Includes;
+
 class i18n {
 
 

@@ -37,7 +37,9 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'API_CLASSES_VERSION', '1.0.0' );
 
+require_once plugin_dir_path( __FILE__ ) . './vendor/autoload.php';
 require_once plugin_dir_path( __FILE__ ) . './autoload.php';
+require_once plugin_dir_path( __FILE__ ) . './includes/ApiClasses.php';
 
 /**
  * The code that runs during plugin activation.
@@ -45,7 +47,7 @@ require_once plugin_dir_path( __FILE__ ) . './autoload.php';
  */
 function activate_api_classes() {
 //	require_once plugin_dir_path( __FILE__ ) . 'includes/class-api-classes-activator.php';
-	Activator::activate();
+    ApiClasses\Includes\Activator::activate();
 }
 
 /**
@@ -54,7 +56,7 @@ function activate_api_classes() {
  */
 function deactivate_api_classes() {
 //	require_once plugin_dir_path( __FILE__ ) . 'includes/class-api-classes-deactivator.php';
-	Deactivator::deactivate();
+	ApiClasses\Includes\Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_api_classes' );
@@ -65,6 +67,8 @@ register_deactivation_hook( __FILE__, 'deactivate_api_classes' );
  * admin-specific hooks, and public-facing site hooks.
  */
 //require plugin_dir_path( __FILE__ ) . 'includes/ApiClasses.php';
+
+
 
 /**
  * Begins execution of the plugin.
@@ -77,8 +81,50 @@ register_deactivation_hook( __FILE__, 'deactivate_api_classes' );
  */
 function run_api_classes() {
 
-	$plugin = new ApiClasses();
+	$plugin = new ApiClasses\Includes\ApiClasses();
 	$plugin->run();
 
 }
 run_api_classes();
+
+
+add_action('rest_api_init', function(){
+    $endUrls = [
+        '',
+        '/me',
+        '/(?P<id>[\d]+)',
+    ];
+    (new ApiClasses\Includes\DisableRestAPI())->disableRESTAPI('wp/v2', 'users', $endUrls);
+    (new ApiClasses\Includes\DisableRestAPI())->disableRESTAPI('wp/v2', 'posts', $endUrls);
+    
+    (new ApiClasses\Includes\UserRESTController())->register_routes();
+});
+
+//add_action('init', function()
+//{
+//    $userRouter = new ApiClasses\Includes\UserRouter();
+//    add_action('rest_api_init', [$userRouter, 'register_routes'], 2);
+//    var_dump($a);die;
+//    apply_filters('rest_authentication_errors', function($a){
+//        echo '<pre>';var_dump($a);die;
+//    });
+//    $wp_rest_server = rest_get_server();
+////    var_dump($wp_rest_server);die();
+//    $all_namespaces     = $wp_rest_server->get_namespaces();
+//    $all_routes         = array_keys( $wp_rest_server->get_routes() );
+//        echo '<pre>';var_dump($wp_rest_server);die;
+//    foreach ( $all_namespaces as $route ) {
+//        echo '<pre>';var_dump($all_namespaces);die;
+//        echo '<pre>';var_dump($all_namespaces);die;
+//    }
+//	remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
+//	remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+//	remove_action( 'template_redirect', 'rest_output_link_header', 11 );
+//        
+//            add_filter( 'json_enabled', '__return_false' );
+//    add_filter( 'json_jsonp_enabled', '__return_false' );
+//
+//    // Filters for WP-API version 2.x
+//    add_filter( 'rest_enabled', '__return_false' );
+//    add_filter( 'rest_jsonp_enabled', '__return_false' );
+//});
